@@ -51,11 +51,12 @@ FullForm]\):>SMB[AA+BB+CC],
 RulesSymbol::usage = "RulesSymbol gives the set of rules used for symbol simplification.";
 
 Clear[SimplifySymbol,MultiplySymbol]
-SimplifySymbol[expr_] := expr/.SMB[XX___]:>SMB@@(Factor/@{XX})//.RulesSymbol//Collect[#,SMB[___],Simplify]&
+SimplifySymbol[expr_] := expr/.SMB[XX___]:>SMB@@(Factor/@{XX})//.RulesSymbol//Collect[#,{SMB[___],\[ScriptCapitalR][___]},Simplify]&
 MultiplySymbol[expr_] := 
 	Block[{exprC=0,exprR=expr},
 		While[!TrueQ[exprC==exprR],
-			exprC=exprR;exprR=exprR//.{Ca_SMB Cb_SMB:>Block[{tab,temp,La=Length[Ca],Lb=Length[Cb]},
+			exprC=exprR;
+			exprR=exprR//.{\[ScriptCapitalR][a_]\[ScriptCapitalR][b_]:>\[ScriptCapitalR][a b],Ca_SMB Cb_SMB:>Block[{tab,temp,La=Length[Ca],Lb=Length[Cb]},
 				tab=Subsets[Range[La+Lb],{Lb}];
 				Sum[temp=Ca;Do[temp=Insert[temp,Cb[[j]],tab[[k,j]]],{j,Lb}];temp,{k,1,Length[tab]}]
 			],
@@ -84,9 +85,9 @@ Convert::usage = "Convert[expr] returns the symbol of expr.";
 ParallelConvert::usage = "ParallelConvert[expr] returns the symbol of expr. This function uses parallel evaluation.";
 	
 Clear[ClipFirstEntry,ClipLastEntry]
-ClipLastEntry[expr_,a_] := (expr/.SMB->SYMB/.SYMB[Sequence@@a]:>1/.SYMB[AA___,Sequence@@a]:>SMB[AA]/.SYMB[___]:>0)/;ListQ[a]
+ClipLastEntry[expr_,a_] := (expr-(expr/.SMB[___]:>0)/.SMB->SYMB/.SYMB[Sequence@@a]:>1/.SYMB[AA___,Sequence@@a]:>SMB[AA]/.SYMB[___]:>0)/;ListQ[a]
 ClipLastEntry[expr_,a_] := ClipLastEntry[expr,{a}]/;!ListQ[a]
-ClipFirstEntry[expr_,a_] := (expr/.SMB->SYMB/.SYMB[Sequence@@a]:>1/.SYMB[Sequence@@a,AA___]:>SMB[AA]/.SYMB[___]:>0)/;ListQ[a]
+ClipFirstEntry[expr_,a_] := (expr-(expr/.SMB[___]:>0)/.SMB->SYMB/.SYMB[Sequence@@a]:>1/.SYMB[Sequence@@a,AA___]:>SMB[AA]/.SYMB[___]:>0)/;ListQ[a]
 ClipFirstEntry[expr_,a_] := ClipFirstEntry[expr,{a}]/;!ListQ[a]
 ClipLastEntry::usage = "ClipLastEntry[expr,x] removes x from the end of each symbol that ends with it. Any symbol that doesn't end with x is set to zero. ClipLastEntry[expr,{x[1],...,x[n]}] removes n last entries instead.";
 ClipFirstEntry::usage = "ClipFirstEntry[expr,x] removes x from the end of each symbol that starts with it. Any symbol that doesn't start with x is set to zero. ClipFirstEntry[expr,{x[1],...,x[n]}] removes n first entries instead.";

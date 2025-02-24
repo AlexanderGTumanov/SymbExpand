@@ -22,6 +22,7 @@ Clear[DShift,DFlip,DihedralOrbit]
 DShift = {\[ScriptA]->\[ScriptB],\[ScriptB]->\[ScriptC],\[ScriptC]->\[ScriptA],\[ScriptD]->\[ScriptE],\[ScriptE]->\[ScriptF],\[ScriptF]->\[ScriptD]};
 DFlip = {\[ScriptA]->\[ScriptB],\[ScriptB]->\[ScriptA],\[ScriptC]->\[ScriptC],\[ScriptD]->\[ScriptE],\[ScriptE]->\[ScriptD],\[ScriptF]->\[ScriptF]};
 DihedralOrbit[symb_] := Join[{symb,symb/.DFlip},{symb,symb/.DFlip}/.DShift,{symb,symb/.DFlip}/.DShift/.DShift]/;FreeQ[symb,u[_]]
+DihedralOrbit[symb_] := Flatten@Table[{symb,symb/.{u[1]->u[2],u[2]->u[1]}}/.u[i_]:>u@Mod[i+kk,3,1],{kk,3}]/;!FreeQ[symb,u[_]]
 DihedralOrbit::usage = "DihedralOrbit[expr] returns the list of images of expr under dihedral transformations.";
 
 Clear[IncreaseTranscendentality]
