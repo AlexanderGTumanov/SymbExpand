@@ -34,6 +34,6 @@ The symbol tensor product is represented by the ``SMB`` function. The expression
 * ``SimplifySymbol[expr]``: Simplifies the arguments of all tensor products within expr using symbol simplification rules (``RulesSymbol``). It then collects and simplifies all prefactors.
 * ``MultiplySymbol[expr]``: Merges products of symbols and ``\[ScriptCapitalR]`` functions in each term of expr according to symbol multiplication rules.
 * ``Convert[expr]`` returns the symbol of a polylogarithmic function.
-* ``ParallelConvert[expr]`` returns the symbol of a polylogarithmic function. This function uses parallel avaluation to spped up the calculation.
+* ``ParallelConvert[expr]`` returns the symbol of a polylogarithmic function. This function uses parallel avaluation to speed up the calculation.
 
 [^1]: Up to transcendental constatnts.
