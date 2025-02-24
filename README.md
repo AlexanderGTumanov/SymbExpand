@@ -18,7 +18,7 @@ SetDirectory["symbol-expansion-for-mathematica"];
 ## Introduction
 In perturbative quantum field theory, observables are hypothesized to reside in spaces of polylogarithmic functions. In the simplest cases — such as scattering amplitudes and form factors of local operators with a small number of external momenta — these spaces are known to consist exclusively of generalized polylogarithms, without any elliptic behavior.
 
-These function spaces naturally possess Hopf algebra structures, which enable the transformation of functional analysis problems into linear algebra problems. This is achieved through the symbol map, which uniquely[^1] represents a polylogarithmic function as a tensor-product-like object:
+These function spaces naturally possess Hopf algebra structures, which enable the transformation of functional analysis problems into linear algebra problems. This is achieved through the **symbol map**, which uniquely[^1] represents a polylogarithmic function as a tensor-product-like object:
 
 $$
 \sum\limits_{I_n}\ c_{i_1\ldots i_n}\ a_{i_1}\otimes \ldots \otimes a_{i_n}\ .
