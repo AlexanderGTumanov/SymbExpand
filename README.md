@@ -16,7 +16,7 @@ SetDirectory["symbol-expansion-for-mathematica"];
 <<SymbolExpansion`;
 ```
 ## Introduction
-In perturbative quantum field theory, observables are hypothesized to reside in spaces of polylogarithmic functions. In the simplest cases—such as scattering amplitudes and form factors of local operators with a small number of external momenta—these spaces are known to consist exclusively of generalized polylogarithms, without any elliptic behavior.
+In perturbative quantum field theory, observables are hypothesized to reside in spaces of polylogarithmic functions. In the simplest cases — such as scattering amplitudes and form factors of local operators with a small number of external momenta — these spaces are known to consist exclusively of generalized polylogarithms, without any elliptic behavior.
 
 These function spaces naturally possess Hopf algebra structures, which enable the transformation of functional analysis problems into linear algebra problems. This is achieved through the symbol map, which uniquely[^1] represents a polylogarithmic function as a tensor-product-like object:
 
@@ -24,8 +24,16 @@ $$
 \sum\limits_{I_n}\ c_{i_1\ldots i_n}\ a_{i_1}\otimes \ldots \otimes a_{i_n}\ .
 $$
 
-The length of the tensor product, $n$, corresponds to the **transcendentality** of the polylogarithmic function. Its entries, $a_i$​, are known as **symbol letters**—functions of external kinematics that encode the locations of the observable's branch cuts. The set of all symbol letters forms the **alphabet**, a fundamental characteristic of the observable that, in most relevant cases, remains unchanged at any given loop order. In pure function spaces, the coefficients $c_{i_1\ldots i_n}$​​ are rational numbers. More generally, they can be rational functions of the external kinematics.
+The length of the tensor product, $n$, corresponds to the **transcendentality** of the polylogarithmic function. Its entries, $a_i$​, are known as **symbol letters** — functions of external kinematics that encode the locations of the observable's branch cuts. The set of all symbol letters forms the **alphabet**, a fundamental characteristic of the observable that, in most relevant cases, remains unchanged at any given loop order. In pure function spaces, the coefficients $c_{i_1\ldots i_n}$​​ are rational numbers. More generally, they can be rational functions of the external kinematics.
 
 This representation gives rise to powerful bootstrap techniques, which aim to compute observables by determining $c_{i_1\ldots i_n}$ through the imposition of constraints. This often requires expanding the observable around certain kinematic limits. In the symbol language, such expansions can be challenging, especially when performed around a branch point, where logarithmic singularities arise. This package provides tools to automate this process.
+
+## Usage
+The symbol tensor product is represented by the ``SMB`` function. The expression ``SMB[a[1], ..., a[n]]`` corresponds to $a_1\otimes\ldots\otimes a_n$. In non-pure function spaces, rational prefactors should be wrapped with the ``\[ScriptCapitalR][_]`` function. The package provides the following operations on these objects:
+
+* ``SimplifySymbol[expr]``: Simplifies the arguments of all tensor products within expr using symbol simplification rules (``RulesSymbol``). It then collects and simplifies all prefactors.
+* ``MultiplySymbol[expr]``: Merges products of symbols and ``\[ScriptCapitalR]`` functions in each term of expr according to symbol multiplication rules.
+* ``Convert[expr]`` returns the symbol of a polylogarithmic function.
+* ``ParallelConvert[expr]`` returns the symbol of a polylogarithmic function. This function uses parallel avaluation to spped up the calculation.
 
 [^1]: Up to transcendental constatnts.
