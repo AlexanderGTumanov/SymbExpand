@@ -1,7 +1,11 @@
 (* ::Package:: *)
 
+Block[{$Path = DirectoryName[$InputFileName]},
+	<<SymbolExpansion`
+]
+
 version=1.0;
-Print["C Front Space ",ToString@NumberForm[version,{20,1}]]
+Print["C front space ",ToString@NumberForm[version,{20,1}]]
 Print["by Alexander G Tumanov"]
 
 Clear[UtoL,LtoU,LtoO,UtoO]
