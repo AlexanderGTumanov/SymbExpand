@@ -56,10 +56,10 @@ The package provides tools for constructing and constraining bases in the symbol
 Lastly, the package provides the expansion tools themselves:
 
 * ``StandardizeArgument[letter,x]``: Rewrites ``letter`` in the form $b\ x^a\ (1 + \ldots)$, preparing it for expansion in ``x``. The function returns ``{a,b}``.
-* ``RemoveLogs[expr, x]`` rewrites ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
+* ``RemoveLogs[expr,x]`` rewrites ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
 * ``ParallelRemoveLogs[expr, x]``: Uses parallel evaluation to rewrite ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
-* ``SymbolD[expr, x]``:
-* ``ParallelSymbolD[expr, x]``:
+* ``SymbolD[expr,{x,n}]``: Computes the ``n``th derivative of ``expr`` over ``x`` if ``x = 0`` is not a brach point of the function. If it is, the function returns the regular part of the derivative needed to construct the power expansion around this point.
+* ``ParallelSymbolD[expr, x]``: Uses parallel evaluation to compute the ``n``th derivative of ``expr`` over ``x`` if ``x = 0`` is not a brach point of the function. If it is, the function returns the regular part of the derivative needed to construct the power expansion around this point.
 * ``SymbolSeries[expr,{x,n}]``: Returns the expansion of ``expr`` around ``x = 0`` up to order ``n``.
 * ``ParallelSymbolSeries[expr,{x,n}]``: Uses parallel evaluation to return the expansion of ``expr`` around ``x = 0`` up to order ``n``.
 * ``SymbolSeriesCoefficient[expr,{x,n}]``: Returns the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
@@ -73,6 +73,17 @@ The package is formulated in terms of the six-letter alphabet $\mathcal{a},\math
 
 * ``DihedralOrbit[expr]``: Generates the set of images of ``expr`` under dihedral transformations.
 * ``IncreaseTranscendentality[expr]``: Increases the transcendentality of ``expr``, whether given as a list of symbols or as a linear combination of them, by appending an additional entry to each symbol."
-* CDihedral[expr]: Generates the dihedral constraints on ``expr``.
+* ``CDihedral[expr]``: Generates the dihedral constraints on ``expr``.
+* ``CClassicality[expr]``: Generates the classicality (absence of non-classical polylogarithms) constraints on the transcendentality-four part of ``expr``.
+
+**Note:** The $\mathcal{C}$ space is constructed recursively, by appending letters at the end through the use of ``IncreaseTranscendentality`` function and imposing constraints at each step. Both the dihedral and the classicality are not included in this definition and should therefore be only imposed at the very end, prior to matching the ansatz with the data.
+
+* ``CIntegrability[expr]``: generates the integrability constraints (requirement that the symbol corresponds to an actual polylogarithmic function) on the last two symbol entries of ``expr``.
+* ``CNonAdjacency[expr]``: Generates the non-adjacency constraints on the last two and three symbol entries of ``expr``.
+* ``CFirstEntry[expr]``: Generates the first-entry constraints on expr up to transcendentality four.
+
+**Note:** Because the first-entry constraints are implemented only up to transcendentality four, beyond this point, the package produces slightly larger spaces.
+
+* ``\[ScriptCapitalC][n]`` Returns a list of basis elements in the $\mathcal{C}$-space of transcendentality ``n``.
 
 [^1]: Up to transcendental constatnts.
