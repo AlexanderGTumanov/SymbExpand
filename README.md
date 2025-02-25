@@ -76,7 +76,7 @@ The package is formulated in terms of the six-letter alphabet $\mathcal{a},\math
 * ``CDihedral[expr]``: Generates the dihedral constraints on ``expr``.
 * ``CClassicality[expr]``: Generates the classicality (absence of non-classical polylogarithms) constraints on the transcendentality-four part of ``expr``.
 
-**Note:** The $\mathcal{C}$ space is constructed recursively, by appending letters at the end through the use of ``IncreaseTranscendentality`` function and imposing constraints at each step. Both the dihedral and the classicality are not included in this definition and should therefore be only imposed at the very end, prior to matching the ansatz with the data.
+**Note:** The $\mathcal{C}$ space is constructed recursively, by appending letters at the end through the use of ``IncreaseTranscendentality`` function and imposing constraints at each step. Both the dihedral and the classicality constraints are not included in this definition and should therefore be only imposed at the very end, prior to matching the ansatz with the data.
 
 * ``CIntegrability[expr]``: generates the integrability constraints (requirement that the symbol corresponds to an actual polylogarithmic function) on the last two symbol entries of ``expr``.
 * ``CNonAdjacency[expr]``: Generates the non-adjacency constraints on the last two and three symbol entries of ``expr``.
