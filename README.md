@@ -39,9 +39,9 @@ The symbol tensor product is represented by the ``SMB`` function. The expression
 **Note:** The ``Convert`` and ``ParallelConvert`` functions currently support only classical polylogarithms. To compute symbols of a broader class of functions, consider using external packages such as [PolyLogTools](https://gitlab.com/pltteam/plt).
 
 * ``SMBtoEQN[expr]``: Decomposes the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors.
-* ``SMBtoEQN[expr, vars]`` Decomposes the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors. It then further splits the resulting equations based on the variables in ``vars``.
+* ``SMBtoEQN[expr,vars]`` Decomposes the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors. It then further splits the resulting equations based on the variables in ``vars``.
 * ``ParallelSMBtoEQN[expr]``: Uses parallel evaluation to decompose the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors.
-* ``ParallelSMBtoEQN[expr, vars]`` Uses parallel evaluation to decompose the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors. It then further splits the resulting equations based on the variables in ``vars``.
+* ``ParallelSMBtoEQN[expr,vars]`` Uses parallel evaluation to decompose the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors. It then further splits the resulting equations based on the variables in ``vars``.
 * ``ClipLastEntry[expr,entry]``: Removes ``entry`` from the end of all symbols in ``expr`` that end with it and sets the remaining terms to zero. If ``entry`` is a list, the function removes multiple last entries at once.
 * ``ClipFirstEntry[expr,entry]``: Removes ``entry`` from the beginning of all symbols in ``expr`` that begin with it and sets the remaining terms to zero. If ``entry`` is a list, the function removes multiple first entries at once.
 
@@ -57,9 +57,9 @@ Lastly, the package provides the expansion tools themselves:
 
 * ``StandardizeArgument[letter,x]``: Rewrites ``letter`` in the form $b\ x^a\ (1 + \ldots)$, preparing it for expansion in ``x``. The function returns ``{a,b}``.
 * ``RemoveLogs[expr,x]`` rewrites ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
-* ``ParallelRemoveLogs[expr, x]``: Uses parallel evaluation to rewrite ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
+* ``ParallelRemoveLogs[expr,x]``: Uses parallel evaluation to rewrite ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
 * ``SymbolD[expr,{x,n}]``: Computes the ``n``th derivative of ``expr`` over ``x`` if ``x = 0`` is not a brach point of the function. If it is, the function returns the regular part of the derivative needed to construct the power expansion around this point.
-* ``ParallelSymbolD[expr, x]``: Uses parallel evaluation to compute the ``n``th derivative of ``expr`` over ``x`` if ``x = 0`` is not a brach point of the function. If it is, the function returns the regular part of the derivative needed to construct the power expansion around this point.
+* ``ParallelSymbolD[expr,x]``: Uses parallel evaluation to compute the ``n``th derivative of ``expr`` over ``x`` if ``x = 0`` is not a brach point of the function. If it is, the function returns the regular part of the derivative needed to construct the power expansion around this point.
 * ``SymbolSeries[expr,{x,n}]``: Returns the expansion of ``expr`` around ``x = 0`` up to order ``n``.
 * ``ParallelSymbolSeries[expr,{x,n}]``: Uses parallel evaluation to return the expansion of ``expr`` around ``x = 0`` up to order ``n``.
 * ``SymbolSeriesCoefficient[expr,{x,n}]``: Returns the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
