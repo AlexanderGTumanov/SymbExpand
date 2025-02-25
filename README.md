@@ -60,9 +60,9 @@ Lastly, the package provides the expansion tools themselves:
 * ``ParallelRemoveLogs[expr, x]``: Uses parallel evaluation to rewrite ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
 * ``SymbolD[expr, x]``:
 * ``ParallelSymbolD[expr, x]``:
-* ``SymbolSeries[expr,{x,n}]``: returns the expansion of ``expr`` around ``x = 0`` up to order ``n``.
-* ``ParallelSymbolSeries[expr,{x,n}]``: uses parallel evaluation to return the expansion of ``expr`` around ``x = 0`` up to order ``n``.
-* ``SymbolSeriesCoefficient[expr,{x,n}]``: returns the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
-* ``ParallelSymbolSeriesCoefficient[expr,{x,n}]``: uses parallel evaluation to return the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
+* ``SymbolSeries[expr,{x,n}]``: Returns the expansion of ``expr`` around ``x = 0`` up to order ``n``.
+* ``ParallelSymbolSeries[expr,{x,n}]``: Uses parallel evaluation to return the expansion of ``expr`` around ``x = 0`` up to order ``n``.
+* ``SymbolSeriesCoefficient[expr,{x,n}]``: Returns the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
+* ``ParallelSymbolSeriesCoefficient[expr,{x,n}]``: Uses parallel evaluation to return the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
 
 [^1]: Up to transcendental constatnts.
