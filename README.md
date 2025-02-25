@@ -42,7 +42,27 @@ The symbol tensor product is represented by the ``SMB`` function. The expression
 * ``SMBtoEQN[expr, vars]`` Decomposes the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors. It then further splits the resulting equations based on the variables in ``vars``.
 * ``ParallelSMBtoEQN[expr]``: Uses parallel evaluation to decompose the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors.
 * ``ParallelSMBtoEQN[expr, vars]`` Uses parallel evaluation to decompose the equation ``expr = 0`` into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors. It then further splits the resulting equations based on the variables in ``vars``.
-* ``ClipLastEntry[expr,entry]``: Removes ``letter`` from the end of all symbols in ``expr`` that end with it and sets the remaining terms to zero. If ``entry`` is a list, the function removes multiple last entries at once.
-* ``ClipFirstEntry[expr,entry]``: Removes ``letter`` from the beginning of all symbols in ``expr`` that begin with it and sets the remaining terms to zero. If ``entry`` is a list, the function removes multiple first entries at once.
-* ``StandardizeArgument[expr,x]``: rewrites expr in the form $b\ x^a\ (1 + \ldots)$, preparing it for expansion in ``x``. The function returns ``{a,b}``.
+* ``ClipLastEntry[expr,entry]``: Removes ``entry`` from the end of all symbols in ``expr`` that end with it and sets the remaining terms to zero. If ``entry`` is a list, the function removes multiple last entries at once.
+* ``ClipFirstEntry[expr,entry]``: Removes ``entry`` from the beginning of all symbols in ``expr`` that begin with it and sets the remaining terms to zero. If ``entry`` is a list, the function removes multiple first entries at once.
+
+The package provides tools for constructing and constraining bases in the symbol space. It supports two notations: a list of basis vectors and a linear combination of basis vectors with coefficients ``\[ScriptS][i]``. The following functions are available for basis manipulation:
+
+* ``RemoveNumericFactors[list]``: Removes overall numeric factors from a list of symbols.
+* ``ToSymbol[list]``: Converts a list of vectors in the symbol space into a linear combination of these vectors.
+* ``ToList[symbol]``: Converts a linear combination of symbols into a list.
+* ``ToBasis[expr]``: Reduces ``expr``, whether given as a list of symbols or as a linear combination of them, to a linearly independent subset.
+* ``Impose[expr,constr]``: Restricts ``expr``, whether given as a list of symbols or as a linear combination of them, to the subset of symbols that satisfy the constraints specified by ``constr``.
+
+Lastly, the package provides the expansion tools themselves:
+
+* ``StandardizeArgument[letter,x]``: Rewrites ``letter`` in the form $b\ x^a\ (1 + \ldots)$, preparing it for expansion in ``x``. The function returns ``{a,b}``.
+* ``RemoveLogs[expr, x]`` rewrites ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
+* ``ParallelRemoveLogs[expr, x]``: Uses parallel evaluation to rewrite ``expr`` to explicitly manifest its logarithmic divergences around the branch point ``x = 0``, expressing them as powers of ``log[x]`` . If ``x = 0`` is not a branch point, it returns ``expr`` unchanged.
+* ``SymbolD[expr, x]``:
+* ``ParallelSymbolD[expr, x]``:
+* ``SymbolSeries[expr,{x,n}]``: returns the expansion of ``expr`` around ``x = 0`` up to order ``n``.
+* ``ParallelSymbolSeries[expr,{x,n}]``: uses parallel evaluation to return the expansion of ``expr`` around ``x = 0`` up to order ``n``.
+* ``SymbolSeriesCoefficient[expr,{x,n}]``: returns the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
+* ``ParallelSymbolSeriesCoefficient[expr,{x,n}]``: uses parallel evaluation to return the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
+
 [^1]: Up to transcendental constatnts.
