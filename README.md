@@ -65,6 +65,8 @@ Lastly, the package provides the expansion tools themselves:
 * ``SymbolSeriesCoefficient[expr,{x,n}]``: Returns the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
 * ``ParallelSymbolSeriesCoefficient[expr,{x,n}]``: Uses parallel evaluation to return the coefficient of $x^n$ of the series expansion of ``expr`` around ``x = 0``.
 
+**Note:** The package is not designed to expand expressions whose power series contain terms of negative degree. To process such expressions, the user should first multiply them by a suitable power of the expansion parameter to eliminate all singular behavior.
+
 ## $\mathcal{C}$ front space
 
 The simplest and one of the most important function spaces that arise in $\mathcal{N} = 4$, which is known to contain all three-point form factors of protected local operators within the theory. The package ``CFrontSpace.m`` implements the direct construction of this space by imposing its defining constraints.
