@@ -66,8 +66,8 @@ MultiplySymbol[expr_] :=
 			]/;n>1}//Expand
 		];
 	exprR]
-SimplifySymbol::usage = "SimplifySymbol[expr] simplifies expr, including the letters within each symbol.";  
-MultiplySymbol::usage = "MultiplySymbol[expr] computes the product of all SMB functions within expr.";  
+SimplifySymbol::usage = "SimplifySymbol[expr] simplifies the arguments of all tensor products within expr using symbol simplification rules (RulesSymbol). It then collects and simplifies all prefactors.";  
+MultiplySymbol::usage = "MultiplySymbol[expr] merges products of symbols and \[ScriptCapitalR] functions in each term of expr according to symbol multiplication rules.";  
 
 Clear[PolySymbol,Symbolize,Convert,ParallelConvert]
 PolySymbol[1,x_] := 1-x
@@ -81,23 +81,8 @@ ParallelConvert[expr_] :=
 	Block[{exprCD=Expand[expr/.Symbolize]/.SMB[a___]:>CD[\[ScriptF][a]]//.{CD[a___]CD[b___]:>CD@@Join[{a},{b}],CD[a___]^n_:>CD@@Join@@Table[{a},{i,n}]}/.CD[a___]:>CD@@Sort[{a}],CC},
 		CC=Union@Cases[{exprCD},CD[___],\[Infinity]];(exprCD/.CD[___]:>0)+ParallelSum[Coefficient[exprCD,CC[[i]]]CC[[i]]/.CD[a___]:>Times@@(SMB@@#&/@{a})//MultiplySymbol//SimplifySymbol,{i,Length[CC]}]
 	]//.RulesSymbol//Collect[#,SMB[___],Simplify]&
-Convert::usage = "Convert[expr] returns the symbol of expr.";
-ParallelConvert::usage = "ParallelConvert[expr] returns the symbol of expr. This function uses parallel evaluation.";
-	
-Clear[ClipFirstEntry,ClipLastEntry]
-ClipLastEntry[expr_,a_] := (expr-(expr/.SMB[___]:>0)/.SMB->SYMB/.SYMB[Sequence@@a]:>1/.SYMB[AA___,Sequence@@a]:>SMB[AA]/.SYMB[___]:>0)/;ListQ[a]
-ClipLastEntry[expr_,a_] := ClipLastEntry[expr,{a}]/;!ListQ[a]
-ClipFirstEntry[expr_,a_] := (expr-(expr/.SMB[___]:>0)/.SMB->SYMB/.SYMB[Sequence@@a]:>1/.SYMB[Sequence@@a,AA___]:>SMB[AA]/.SYMB[___]:>0)/;ListQ[a]
-ClipFirstEntry[expr_,a_] := ClipFirstEntry[expr,{a}]/;!ListQ[a]
-ClipLastEntry::usage = "ClipLastEntry[expr,x] removes x from the end of each symbol that ends with it. Any symbol that doesn't end with x is set to zero. ClipLastEntry[expr,{x[1],...,x[n]}] removes n last entries instead.";
-ClipFirstEntry::usage = "ClipFirstEntry[expr,x] removes x from the end of each symbol that starts with it. Any symbol that doesn't start with x is set to zero. ClipFirstEntry[expr,{x[1],...,x[n]}] removes n first entries instead.";
-
-Clear[StandardizeArgument]
-StandardizeArgument[expr_,T_] := StandardizeArgument[expr,T] =
-	Block[{logTpower=Coefficient[PowerExpand@FullSimplify[SeriesCoefficient[Log[expr],{T,0,0}]],Log[T]]},
-		{logTpower,FullSimplify@SeriesCoefficient[expr/T^logTpower,{T,0,0}]}
-	]
-StandardizeArgument::usage = "StandardizeArgument[expr, x] rewrites expr in the form \[Beta] \!\(\*SuperscriptBox[\(x\), \(\[Alpha]\)]\) (1 + ...), preparing it for expansion in x. The function returns {\[Alpha], \[Beta]}.";  
+Convert::usage = "Convert[expr] computes the symbol of a polylogarithmic function.";
+ParallelConvert::usage = "ParallelConvert[expr] computes the symbol of a polylogarithmic function using parallel evaluation to speed up the calculation.";
 
 Clear[SMBtoEQN]
 SMBtoEQN[expr_] :=
@@ -111,7 +96,7 @@ SMBtoEQN[expr_,vars_] :=
 		EE
 	]/;ListQ[vars]
 SMBtoEQN[expr_,vars_] := SMBtoEQN[expr,{vars}]/;!ListQ[vars]
-SMBtoEQN::usage = "SMBtoEQN[expr] decomposes the equation expr = 0 into its independent components, corresponding to individual symbol terms. This function also accounts for cases where the space is not pure, requiring all rational prefactors in front of symbols to be wrapped by the \[ScriptCapitalR][_] function. SMBtoEQN[expr, vars] further splits the equation over the variables in vars.";  
+SMBtoEQN::usage = "SMBtoEQN[expr] decomposes the equation expr = 0 into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors. SMBtoEQN[expr, vars] further splits the resulting equations based on the variables in vars.";  
 
 Clear[ParallelSMBtoEQN]
 ParallelSMBtoEQN[expr_] :=
@@ -125,7 +110,15 @@ ParallelSMBtoEQN[expr_,vars_] :=
 		EE
 	]/;ListQ[vars]
 ParallelSMBtoEQN[expr_,vars_] := ParallelSMBtoEQN[expr,{vars}]/;!ListQ[vars]
-ParallelSMBtoEQN::usage = "ParallelSMBtoEQN[expr] decomposes the equation expr = 0 into its independent components, corresponding to individual symbol terms. This function also accounts for cases where the space is not pure, requiring all rational prefactors in front of symbols to be wrapped by the \[ScriptCapitalR][_] function. ParallelSMBtoEQN[expr, vars] further splits the equation over the variables in vars. This function uses parallel evaluation.";
+ParallelSMBtoEQN::usage = "ParallelSMBtoEQN[expr] uses parallel evaluation to decompose the equation expr = 0 into its independent components, corresponding to individual symbol terms and, in the non-pure case, their rational prefactors. ParallelSMBtoEQN[expr, vars] further splits the resulting equations based on the variables in vars.";  
+	
+Clear[ClipFirstEntry,ClipLastEntry]
+ClipLastEntry[expr_,a_] := (expr-(expr/.SMB[___]:>0)/.SMB->SYMB/.SYMB[Sequence@@a]:>1/.SYMB[AA___,Sequence@@a]:>SMB[AA]/.SYMB[___]:>0)/;ListQ[a]
+ClipLastEntry[expr_,a_] := ClipLastEntry[expr,{a}]/;!ListQ[a]
+ClipFirstEntry[expr_,a_] := (expr-(expr/.SMB[___]:>0)/.SMB->SYMB/.SYMB[Sequence@@a]:>1/.SYMB[Sequence@@a,AA___]:>SMB[AA]/.SYMB[___]:>0)/;ListQ[a]
+ClipFirstEntry[expr_,a_] := ClipFirstEntry[expr,{a}]/;!ListQ[a]
+ClipLastEntry::usage = "ClipLastEntry[expr,entry] removes entry from the end of all symbols in expr that end with it and sets the remaining terms to zero. If entry is a list, the function removes multiple last entries at once.";
+ClipFirstEntry::usage = "ClipFirstEntry[expr,entry] removes entry from the beginning of all symbols in expr that begin with it and sets the remaining terms to zero. If entry is a list, the function removes multiple first entries at once.";
 
 Clear[RemoveNumericFactors]
 RemoveNumericFactors[list_] := ((LL@@(Factor/@list))//.LL[AA___,nn_ BB_,CC___]:>LL[AA,BB,CC]/;NumericQ[nn]/.LL->List)/;ListQ[list]
@@ -145,8 +138,15 @@ Impose[expr_,constraints_] :=
 	]//ToBasis//If[ListQ[expr],ToList[#],#]&
 ToSymbol::usage = "ToSymbol[list] converts a list of vectors in the symbol space into a linear combination of these vectors with coefficients \[ScriptS][i].";
 ToList::usage = "ToList[symbol] converts a symbol, expressed as a linear combination of symbol space vectors with coefficients \[ScriptS][i], into a list of these vectors.";
-ToBasis::usage = "ToBasis[expr] reduces expr, whether given as a list of symbols or as a linear combination of these symbols with coefficients \[ScriptS][i], to a linearly independent subset.";
-Impose::usage = "Impose[expr, constraints] restricts expr, whether given as a list of symbols or as a linear combination of these symbols with coefficients \[ScriptS][i], to the subset of symbols that satisfy the constraints.";
+ToBasis::usage = "ToBasis[expr] reduces expr, whether given as a list of symbols or as a linear combination of them, to a linearly independent subset.";
+Impose::usage = "Impose[expr, constr] restricts expr, whether given as a list of symbols or as a linear combination of them, to the subset of symbols that satisfy the constraints specified by constr.";
+
+Clear[StandardizeArgument]
+StandardizeArgument[expr_,T_] := StandardizeArgument[expr,T] =
+	Block[{logTpower=Coefficient[PowerExpand@FullSimplify[SeriesCoefficient[Log[expr],{T,0,0}]],Log[T]]},
+		{logTpower,FullSimplify@SeriesCoefficient[expr/T^logTpower,{T,0,0}]}
+	]
+StandardizeArgument::usage = "StandardizeArgument[letter, x] rewrites letter in the form \[Beta] \!\(\*SuperscriptBox[\(x\), \(\[Alpha]\)]\) (1 + ...), preparing it for expansion in x. The function returns {\[Alpha], \[Beta]}.";  
 	
 Clear[CountLogsFront,CountLogsBack,RemoveLogs,ParallelRemoveLogs]
 CountLogsFront[smb_,T_] := Block[{nLog=0},While[If[nLog==Length[smb],False,TrueQ[smb[[nLog+1]]==T]],nLog++];nLog]
@@ -178,7 +178,7 @@ ParallelRemoveLogs[expr_,T_] := (expr/.SMB[___]:>0) +
 		],{ii,Length[CC]}]
 	]
 RemoveLogs::usage = "RemoveLogs[expr, x] rewrites expr to explicitly manifest its logarithmic divergences around the branch point x = 0, expressing them as powers of log[x]. If x = 0 is not a branch point, it returns expr unchanged.";  
-ParallelRemoveLogs::usage = "ParallelRemoveLogs[expr, x] rewrites expr to explicitly manifest its logarithmic divergences around the branch point x = 0, expressing them as powers of log[x]. If x = 0 is not a branch point, it returns expr unchanged. This function utilizes parallel evaluation.";  
+ParallelRemoveLogs::usage = "ParallelRemoveLogs[expr, x] uses parallel evaluation to rewrite expr to explicitly manifest its logarithmic divergences around the branch point x = 0, expressing them as powers of log[x]. If x = 0 is not a branch point, it returns expr unchanged.";  
 
 Clear[SymbolD]
 SymbolD[expr_,TT_] := expr/;ListQ[TT]&&TrueQ[TT[[2]]==0]
@@ -192,7 +192,7 @@ SymbolD[expr_,TT_] := (SymbolD[expr,TT] =
 			],{ii,Length[CC]}]
 		]
 	]/.Ttemp->TT[[1]])/;ListQ[TT]&&TrueQ[TT[[2]]>0]
-SymbolD::usage = "SymbolD[expr,{x,n}] returns n-th derivative of expr over x.";
+SymbolD::usage = "SymbolD[expr,{x,n}] computes the ``n``th derivative of ``expr`` over ``x`` if ``x = 0`` is not a brach point of the function. If it is, the function returns the regular part of the derivative needed to construct the power expansion around this point.";
 
 Clear[ParallelSymbolD]
 ParallelSymbolD[expr_,TT_] := expr/;ListQ[TT]&&TrueQ[TT[[2]]==0]
@@ -206,7 +206,7 @@ ParallelSymbolD[expr_,TT_] := (ParallelSymbolD[expr,TT] =
 			],{ii,Length[CC]}]
 		]
 	]/.Ttemp->TT[[1]])/;ListQ[TT]&&TrueQ[TT[[2]]>0]
-ParallelSymbolD::usage = "ParallelSymbolD[expr,{x,n}] returns n-th derivative of expr over x. This function uses parallel evaluation.";
+ParallelSymbolD::usage = "ParallelSymbolD[expr,{x,n}] uses parallel evaluation to compute the ``n``th derivative of ``expr`` over ``x`` if ``x = 0`` is not a brach point of the function. If it is, the function returns the regular part of the derivative needed to construct the power expansion around this point.";
 
 Clear[SymbolSeriesCoefficient,SymbolSeries]
 SymbolSeriesCoefficient[expr_,TT_] := SymbolSeriesCoefficient[expr,TT] =

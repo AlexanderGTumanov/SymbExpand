@@ -15,7 +15,7 @@ UtoO = {u[1]->1/(1+S^2+T^2),u[2]->S^2/((1+T^2) (1+S^2+T^2)),u[3]->T^2/(1+T^2)}/.
 LtoO = {\[ScriptA]->(1+TT)/(S Sqrt[TT]),\[ScriptB]->S/Sqrt[TT],\[ScriptC]->(Sqrt[TT] (1+S^2+TT))/S,\[ScriptD]->S^2+TT,\[ScriptE]->(1+TT (2+S^2+TT))/S^2,\[ScriptF]->1/TT};
 UtoL::usage = "UtoL is a set of replacements that converts an expression written in terms of \!\(\*SubscriptBox[\(u\), \(1\)]\),\!\(\*SubscriptBox[\(u\), \(2\)]\),\!\(\*SubscriptBox[\(u\), \(3\)]\) (u,v,w) into the one written in terms of the alphabet letters \[ScriptA],\[ScriptB],\[ScriptC],\[ScriptD],\[ScriptE],\[ScriptF].";
 LtoU::usage = "UtoL is a set of replacements that converts an expression written in terms of the alphabet letters \[ScriptA],\[ScriptB],\[ScriptC],\[ScriptD],\[ScriptE],\[ScriptF] into the one written in terms of \!\(\*SubscriptBox[\(u\), \(1\)]\),\!\(\*SubscriptBox[\(u\), \(2\)]\),\!\(\*SubscriptBox[\(u\), \(3\)]\) (u,v,w).";
-UtoO::usage = "UtoL is a set of replacements that converts an expression written in terms of \!\(\*SubscriptBox[\(u\), \(1\)]\),\!\(\*SubscriptBox[\(u\), \(2\)]\),\!\(\*SubscriptBox[\(u\), \(3\)]\) (u,v,w) into the one written in terms of the OPE variables S, F, and TT = \!\(\*SuperscriptBox[\(T\), \(2\)]\).";
+UtoO::usage = "UtoL is a set of replacements that converts an expression written in terms of \!\(\*SubscriptBox[\(u\), \(1\)]\),\!\(\*SubscriptBox[\(u\), \(2\)]\),\!\(\*SubscriptBox[\(u\), \(3\)]\) (u,v,w) into the one written in terms of the OPE variables S, and TT = \!\(\*SuperscriptBox[\(T\), \(2\)]\).";
 LtoU::usage = "UtoL is a set of replacements that converts an expression written in terms of the alphabet letters \[ScriptA],\[ScriptB],\[ScriptC],\[ScriptD],\[ScriptE],\[ScriptF] into the one written in terms of the OPE variables S, F, and TT = \!\(\*SuperscriptBox[\(T\), \(2\)]\).";
 
 Clear[DShift,DFlip,DihedralOrbit]
@@ -30,7 +30,7 @@ IncreaseTranscendentality[expr_] :=
 	Block[{CC=If[ListQ[expr],expr,ToList[expr]]},
 		Flatten@Table[{CC[[ii]]/.SMB[AA__]:>SMB[AA,\[ScriptA]],CC[[ii]]/.SMB[AA__]:>SMB[AA,\[ScriptB]],CC[[ii]]/.SMB[AA__]:>SMB[AA,\[ScriptC]],CC[[ii]]/.SMB[AA__]:>SMB[AA,\[ScriptD]],CC[[ii]]/.SMB[AA__]:>SMB[AA,\[ScriptE]],CC[[ii]]/.SMB[AA__]:>SMB[AA,\[ScriptF]]},{ii,Length[expr]}]
 	]//If[ListQ[expr],#,ToSymbol[#]]&
-IncreaseTranscendentality::usage = "IncreaseTranscendentality[expr] increases the transcendentality of all elements in expr, whether given as a list of symbols or as a linear combination of these symbols with coefficients \[ScriptS][i], by appending an additional entry to each symbol.";
+IncreaseTranscendentality::usage = "IncreaseTranscendentality[expr] increases the transcendentality of all elements in expr, whether given as a list of symbols or as a linear combination of them, by appending an additional entry to each symbol.";
 
 Clear[CDihedral,CClassicality,CIntegrability,CNonAdjacency,CFirstEntry]
 CDihedral[expr_] :=
@@ -105,10 +105,10 @@ CFirstEntry[expr_] :=
 		}]
 	]
 CDihedral::usage = "CDihedral[expr] generates the dihedral constraints on expr.";
-CClassicality::usage = "CClassicality[expr] generates the classicality constraints on the transcendentality-4 part of expr.";
+CClassicality::usage = "CClassicality[expr] generates the classicality constraints on the transcendentality-four part of expr.";
 CIntegrability::usage = "CIntegrability[expr] generates the integrability constraints on the last two symbol entries of expr.";
 CNonAdjacency::usage = "CNonAdjacency[expr] generates the non-adjacency constraints on the last two and three symbol entries of expr.";
-CFirstEntry::usage = "CFirstEntry[expr] generates the first-entry constraints on expr up to transcendentality 4.";
+CFirstEntry::usage = "CFirstEntry[expr] generates the first-entry constraints on expr up to transcendentality four.";
 
 Clear[\[ScriptCapitalC]]
 \[ScriptCapitalC][1] = {SMB[\[ScriptA]],SMB[\[ScriptB]],SMB[\[ScriptC]]};
