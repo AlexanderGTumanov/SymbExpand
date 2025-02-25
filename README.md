@@ -33,9 +33,12 @@ The symbol tensor product is represented by the ``SMB`` function. The expression
 
 * ``SimplifySymbol[expr]``: Simplifies the arguments of all tensor products within expr using symbol simplification rules (``RulesSymbol``). It then collects and simplifies all prefactors.
 * ``MultiplySymbol[expr]``: Merges products of symbols and ``\[ScriptCapitalR]`` functions in each term of ``expr`` according to symbol multiplication rules.
-* ``Convert[expr]`` Computes the symbol of a polylogarithmic function.
-* ``ParallelConvert[expr]`` Computes the symbol of a polylogarithmic function using parallel evaluation to speed up the calculation.
+* ``Convert[funct]`` Computes the symbol of a polylogarithmic function.
+* ``ParallelConvert[funct]`` Computes the symbol of a polylogarithmic function using parallel evaluation to speed up the calculation.
 
 **Note:** The ``Convert`` and ``ParallelConvert`` functions currently support only classical polylogarithms. To compute symbols of a broader class of functions, consider using external packages such as [PolyLogTools](https://gitlab.com/pltteam/plt).
 
+* ``ClipLastEntry[expr,entry]``: Removes ``letter`` from the end of all symbols in ``expr`` that end with it and sets the remaining terms to zero. If ``entry`` is a list, the function removes multiple last entries at once.
+* ``ClipFirstEntry[expr,entry]``: Removes ``letter`` from the beginning of all symbols in ``expr`` that begin with it and sets the remaining terms to zero. If ``entry`` is a list, the function removes multiple first entries at once.
+* ``StandardizeArgument[expr,x]``: rewrites expr in the form $b\ x^a\ (1 + \ldots)$, preparing it for expansion in ``x``. The function returns ``{a,b}``.
 [^1]: Up to transcendental constatnts.
