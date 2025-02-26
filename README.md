@@ -31,7 +31,7 @@ This representation gives rise to powerful bootstrap techniques, which aim to co
 ## Usage
 The symbol tensor product is represented by the ``SMB`` function. The expression ``SMB[a[1], ..., a[n]]`` corresponds to $a_1\otimes\ldots\otimes a_n$. In non-pure function spaces, rational prefactors should be wrapped with the ``\[ScriptCapitalR][_]`` function. The package provides the following operations on these objects:
 
-* ``SimplifySymbol[expr]``: Simplifies the arguments of all tensor products within expr using symbol simplification rules (``RulesSymbol``). It then collects and simplifies all prefactors.
+* ``SimplifySymbol[expr]``: Simplifies the arguments of all tensor products within ``expr`` using symbol simplification rules (``RulesSymbol``). It then collects and simplifies all prefactors.
 * ``MultiplySymbol[expr]``: Merges products of symbols and ``\[ScriptCapitalR]`` functions in each term of ``expr`` according to symbol multiplication rules.
 * ``Convert[funct]`` Computes the symbol of a polylogarithmic function.
 * ``ParallelConvert[funct]`` Computes the symbol of a polylogarithmic function using parallel evaluation to speed up the calculation.
