@@ -69,7 +69,7 @@ Lastly, the package provides the expansion tools themselves:
 
 ## $\mathcal{C}$ front space
 
-The simplest and one of the most important function spaces that arise in $\mathcal{N} = 4$, which is known to contain all three-point form factors of protected local operators within the theory. The package ``CFrontSpace.m`` implements the direct construction of this space by imposing its defining constraints.
+The simplest and one of the most important function spaces that arise in $\mathcal{N} = 4$ super Yang-Mills theory is the so-called $\mathcal{C}$-space, which is known to contain all three-point form factors of protected local operators within the theory. The package ``CFrontSpace.m`` implements the direct construction of this space by imposing its defining constraints.
 
 The package is formulated in terms of the six-letter alphabet $\mathcal{a},\mathcal{b},\mathcal{c},\mathcal{d},\mathcal{e},\mathcal{f}$ but also allows transitions to other variables, namely the Mandelstam variables $u_1,u_2,u_3$ ($u,v,w$) and the Form Factor OPE varibles $S, TT = T^2$. Transitions between these notations can be accomplished using the replacement rules ``UtoL``, ``LtoU``, ``UtoO``, ``LtoO``. Apart from these, the package contains the following tools:
 
