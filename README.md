@@ -1,5 +1,5 @@
 # Symbol expansion for Mathematica
-A package for series expanding the symbols of polylogarithmic functions in Wolfram Mathematica and implementing the C-space of 3-point form factors, defined first in 2204.11901.
+A package for series expanding the symbols of polylogarithmic functions in Wolfram Mathematica and implementing the $\mathcal{C}$-space of 3-point form factors, defined first in 2204.11901.
 ## Installation
 Clone this repository using
 ```console
