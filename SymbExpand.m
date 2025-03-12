@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 version=1.0;
-Print["Symbol Expansion ",ToString@NumberForm[version,{20,1}]]
+Print["SymbExapnd ",ToString@NumberForm[version,{20,1}]]
 Print["by Alexander G Tumanov"]
 
 ClearAll[SMB,RulesSymbol];
