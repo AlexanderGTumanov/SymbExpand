@@ -5,15 +5,13 @@ Clone this repository using
 ```console
 git clone https://github.com/AlexanderGTumanov/symbol-expansion-for-mathematica.git
 ```
-This will create a new directory ``symbol-expansion-for-mathematica`` in the current working directory. Alternatively, you can manually download the ``SymbolExpansion.m`` and  ``CFrontSpace.m`` files. The ``CFrontSpace.m`` package depends on functions from SymbolExpansion.m and will automatically load it upon initialization. Therefore, you can load both packages with:
+Inside the repository, you'll find the ``SymbExpand.m`` and ``CFrontSpace.m`` files. The ``CFrontSpace.m`` package depends on functions from ``SymbExpand.m`` and will automatically load it upon initialization. Therefore, you can load both packages with:
 ```mathematica
-SetDirectory["location_of_the_symbol-expansion-for-mathematica"];
-<<CFrontSpace`;
+Get["/path/to/SymbExpand/mathematica/CFrontSpace.m"]
 ```
-If ``CFrontSpace.m`` is not needed, load only ``SymbolExpansion.m``:
+Replace ``/path/to`` with the actual path where you cloned the repository. If ``CFrontSpace.m`` is not needed, load only ``SymbolExpansion.m``:
 ```mathematica
-SetDirectory["location_of_the_symbol-expansion-for-mathematica"];
-<<SymbolExpansion`;
+Get["/path/to/SymbExpand/mathematica/SymbExpand.m"]
 ```
 ## Introduction
 In perturbative quantum field theory, observables are hypothesized to reside in spaces of polylogarithmic functions. In the simplest cases — such as scattering amplitudes and form factors of local operators with a small number of external momenta — these spaces are known to consist exclusively of generalized polylogarithms, without any elliptic behavior.
