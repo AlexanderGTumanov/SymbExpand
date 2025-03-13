@@ -3,7 +3,7 @@ A package for series expanding the symbols of polylogarithmic functions in Wolfr
 ## Installation
 Clone this repository using
 ```console
-git clone https://github.com/AlexanderGTumanov/symbol-expansion-for-mathematica.git
+git clone https://github.com/AlexanderGTumanov/SymbExpand.git
 ```
 Inside the repository, you'll find the ``SymbExpand.m`` and ``CFrontSpace.m`` files. The ``CFrontSpace.m`` package depends on functions from ``SymbExpand.m`` and will automatically load it upon initialization. Therefore, you can load both packages with:
 ```mathematica
